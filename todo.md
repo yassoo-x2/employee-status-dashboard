@@ -88,4 +88,16 @@
 - [x] Fix conditional hook order in HRAnalytics so memoized administration series are initialized before loading/error returns
 - [x] Add dedicated HR metrics Vitest assertions for code prefixes, special needs, gender/type, police patterns, age/service bands, absence rate, and monthly administration counts
 - [x] Save a new checkpoint after HR page verification
-- [ ] Save the final checkpoint containing the HR analytics page changes
+- [x] Save the final checkpoint containing the HR analytics page changes
+
+- [x] Recalculate monthly employee counts by the DB «الادارة» column
+- [x] Include each employee from the month of «تاريخ المباشرة» and exclude them after the month of «تاريخ انهاء العمل» according to the documented inclusive month rule
+- [x] Add regression tests for start-date inclusion and end-date exclusion
+- [x] Update the HR chart label and verify the corrected series visually
+- [x] Normalize DB employment dates explicitly for Excel serials and dd/mm/yyyy values before monthly aggregation
+- [x] Add concrete fixture tests proving start-month inclusion and end-month exclusion behavior
+- [x] Update the HR chart title and subtitle to name DB.الادارة and the employment date rule
+- [x] Decide and document that the payload contains all administrations while the visible chart intentionally shows the top 6 for readability
+- [x] Test the real monthly-administration aggregation with start/end, open-ended, Excel-serial, and dd/mm/yyyy fixture dates and assert per-administration monthly values
+- [x] Add a production-path test that executes the Python generator and validates the generated dashboard payload
+- [x] Rebuild dashboard.json through the final tested aggregation path and rerun the complete verification
