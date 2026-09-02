@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { filterCurrentEmployeeRecords } from "../shared/dashboard-utils";
-import { buildFilteredMovementChart, countFilteredDirectorates, filterPublicUpdates, getDepartmentsForDirectorate, getSalaryForMonth, isCurrentEmployeeProfile, PUBLIC_FIXED_WIDGET_LABEL, PUBLIC_FIXED_WIDGETS } from "../shared/public-filter-utils";
+import { buildDirectorateDistribution, buildFilteredMovementChart, countFilteredDirectorates, filterPublicUpdates, getDepartmentsForDirectorate, getSalaryForMonth, isCurrentEmployeeProfile, PUBLIC_FIXED_WIDGET_LABEL, PUBLIC_FIXED_WIDGETS } from "../shared/public-filter-utils";
 
 describe("public aggregate filters", () => {
   const rows = [
@@ -29,12 +29,14 @@ describe("public aggregate filters", () => {
 
   it("recalculates central and branch counts from the filtered current profiles", () => {
     const records = [
-      { code: "A", matchStatus: "matched", employee: { workStatus: "على راس عمله", directorate: "إدارة مركزية", department: "قسم 1" }, latestUpdate: null },
-      { code: "B", matchStatus: "matched", employee: { workStatus: "على راس عمله", directorate: "فرع الشمال", department: "قسم 2" }, latestUpdate: null },
-      { code: "C", matchStatus: "matched", employee: { workStatus: "على راس عمله", directorate: "فرع الجنوب", department: "قسم 3" }, latestUpdate: null },
+      { code: "A", matchStatus: "matched", employee: { workStatus: "على راس عمله", organization: "الادارة المركزية", directorate: "مديرية ألف", department: "قسم 1" }, latestUpdate: null },
+      { code: "B", matchStatus: "matched", employee: { workStatus: "على راس عمله", organization: "مديرية فرعية", directorate: "فرع الشمال", department: "قسم 2" }, latestUpdate: null },
+      { code: "C", matchStatus: "matched", employee: { workStatus: "على راس عمله", organization: "مديرية فرعية", directorate: "فرع الجنوب", department: "قسم 3" }, latestUpdate: null },
     ];
     expect(countFilteredDirectorates(records)).toEqual({ current: 3, central: 1, branch: 2 });
-    expect(countFilteredDirectorates(filterCurrentEmployeeRecords(records, { directorate: "إدارة مركزية" }))).toEqual({ current: 1, central: 1, branch: 0 });
+    expect(countFilteredDirectorates(filterCurrentEmployeeRecords(records, { directorate: "مديرية ألف" }))).toEqual({ current: 1, central: 1, branch: 0 });
+    expect(buildDirectorateDistribution(records, "central")).toEqual([{ name: "مديرية ألف", value: 1 }]);
+    expect(buildDirectorateDistribution(records, "branch")).toEqual([{ name: "فرع الجنوب", value: 1 }, { name: "فرع الشمال", value: 1 }]);
   });
 
   it("limits departments to the selected directorate hierarchy and deduplicates observed aliases", () => {

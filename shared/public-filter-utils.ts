@@ -34,14 +34,32 @@ export function isCurrentEmployeeProfile(record: { employee?: any }) {
   return /على راس|على رأس|مباشر|فعال|قائم/.test(String(record.employee?.workStatus ?? ""));
 }
 
-export function isBranchDirectorate(value: unknown) {
-  return /الضابطة الجمركية|فرع|المنطقة الشمالية|المنطقة الجنوبية|المنطقة الشرقية|المنطقة الوسطى/.test(String(value ?? ""));
+export function isCentralAdministration(value: unknown) {
+  return normalizePublicText(value) === normalizePublicText("الادارة المركزية");
+}
+
+export function isBranchAdministration(value: unknown) {
+  return !isCentralAdministration(value);
+}
+
+export function buildDirectorateDistribution<T extends { employee?: any }>(records: T[], scope: "central" | "branch") {
+  const counts = new Map<string, number>();
+  for (const record of records) {
+    if (!isCurrentEmployeeProfile(record)) continue;
+    const employee = record.employee ?? {};
+    const isCentral = isCentralAdministration(employee.organization);
+    if ((scope === "central" && !isCentral) || (scope === "branch" && isCentral)) continue;
+    const directorate = String(employee.directorate ?? "").trim() || "غير محدد";
+    counts.set(directorate, (counts.get(directorate) ?? 0) + 1);
+  }
+  return Array.from(counts.entries()).map(([name, value]) => ({ name, value })).sort((a, b) => b.value - a.value || a.name.localeCompare(b.name, "ar"));
 }
 
 export function countFilteredDirectorates<T extends { employee?: any }>(records: T[]) {
   const current = records.filter(isCurrentEmployeeProfile);
-  const branch = current.filter((record) => isBranchDirectorate(record.employee?.directorate ?? record.employee?.organization)).length;
-  return { current: current.length, branch, central: Math.max(0, current.length - branch) };
+  const central = buildDirectorateDistribution(records, "central").reduce((sum, row) => sum + row.value, 0);
+  const branch = buildDirectorateDistribution(records, "branch").reduce((sum, row) => sum + row.value, 0);
+  return { current: current.length, branch, central };
 }
 
 export const PUBLIC_FIXED_WIDGET_LABEL = "إجمالي المصدر — غير متأثر بالفلاتر";

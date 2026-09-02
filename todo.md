@@ -140,3 +140,17 @@
 
 - [x] Remove salary from the source-wide fixed-widget metadata because it now responds to the month filter
 - [x] Update regression assertions so salary is month-sensitive while centers, training, and map remain source-wide
+
+## Directorate distribution chart revision
+
+- [x] Build a current-employee distribution by directorate using the DB «المديرية» field and the DB «الادارة» classification
+- [x] Classify central directorates strictly where DB «الادارة» equals «الادارة المركزية»
+- [x] Classify branch directorates where DB «الادارة» differs from «الادارة المركزية» and group their current employee counts by directorate
+- [x] Replace central/branch KPI cards with full directorate distribution charts and update explanatory labels
+- [x] Add Vitest coverage for central/branch classification, per-directorate counts, and filter behavior
+- [x] Verify RTL desktop and landscape rendering, TypeScript, tests, and production build
+
+## Final landscape verification follow-up
+
+- [x] Re-run the public overview visual verification at 1024×768 after the directorate chart revision
+- [x] Confirm directorate labels, internal scrolling, and RTL layout remain unclipped at landscape/tablet width

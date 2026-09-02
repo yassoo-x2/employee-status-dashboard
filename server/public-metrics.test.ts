@@ -8,6 +8,8 @@ describe("public overview metrics", () => {
     expect(dashboardData.publicMetrics.salarySource).toBe("المالي.الرواتب");
     expect(dashboardData.publicMetrics.centers).toBe(dashboardData.workLocations.length);
     expect(dashboardData.publicMetrics.centralDirectoratesEmployees + dashboardData.publicMetrics.branchDirectoratesEmployees).toBeGreaterThan(0);
+    expect(dashboardData.publicMetrics.centralDirectoratesEmployees).toBe(683);
+    expect(dashboardData.publicMetrics.branchDirectoratesEmployees).toBe(1435);
   });
 
   it("contains hierarchy-driven directorate/departments and monthly salary values", () => {

@@ -1,7 +1,7 @@
 export type DashboardRecord = {
   code?: string;
   matchStatus: string;
-  employee?: { name?: string; organization?: string; directorate?: string; department?: string } | null;
+  employee?: { name?: string; organization?: string; directorate?: string; department?: string; workStatus?: string } | null;
   latestUpdate?: { name?: string; month?: string; status?: string; organization?: string; department?: string } | null;
 };
 
@@ -34,7 +34,7 @@ export function filterDashboardRecords(records: DashboardRecord[], filters: { qu
 }
 
 export function filterCurrentEmployeeRecords(records: DashboardRecord[], filters: { directorate?: string; organization?: string; department?: string }) {
-  return filterDashboardRecords(records, { ...filters, month: "all" }).filter((record) => Boolean(record.employee));
+  return filterDashboardRecords(records, { ...filters, month: "all" }).filter((record) => Boolean(record.employee) && /على راس|على رأس|مباشر|فعال|قائم/.test(String(record.employee?.workStatus ?? "")));
 }
 
 export function calculateKpis(quality: { employeeRows: number; updateRows: number; updatesMissingEmployee: number; employeesMissingUpdate: number }) {
