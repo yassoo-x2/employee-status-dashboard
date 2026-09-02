@@ -52,3 +52,21 @@
 - [x] Record official brand-guide limitation and avoid claiming exact official compliance until a guide is supplied
 - [x] Re-check palette contrast and chart readability after the final aggregate-filter redesign
 - [x] Fix conditional hook order in Home so aggregate filters do not trigger a rendered-more-hooks error during loading
+
+- [x] Add current employee count KPI to the public overview page
+- [x] Add total salaries KPI using the supplied financial source field, with the unit explicitly marked as unspecified until business confirmation
+- [x] Add number of centers KPI from normalized work-location data
+- [x] Add training attendance KPI placeholder; populate it after the user supplies the training workbook
+- [x] Add central directorates employee count
+- [x] Add branch directorates employee count
+- [x] Add monthly new-contract and separation charts
+- [x] Add monthly transfers into and out of the Customs Administration
+- [x] Add a work-location map for directorates and units using DB location fields
+- [x] Inspect DB fields for salary, organizational level, movement type/date, and latitude/longitude or geocodable location names
+- [x] Add tests for the new public overview aggregations and map-location normalization
+
+- [x] Label the salary KPI as source-unit total until the user confirms currency and business meaning
+- [x] Validate and test that the salary KPI uses the approved financial source field
+- [x] Replace the failing Google Maps success path with a deterministic coordinate-based work-location map
+- [x] Remove map-load console errors and verify the deterministic map in the browser
+- [x] Run a fresh browser-console verification after the coordinate-map replacement and document the clean result
