@@ -107,3 +107,19 @@
 - [x] Map خارجي + نقل إلى to نقل خارج الجمارك
 - [x] Aggregate all داخلي rows into النقل الداخلي regardless of الحالة
 - [x] Add regression tests for the three transfer classification rules and update the chart labels
+
+- [x] Make public-page KPI cards respond to month/status/organization/department filters where source records support it
+- [x] Make contracts, separations, and transfer charts respond to the selected month and employee-scope filters
+- [x] Keep and label location-map and source-wide totals as fixed when the filter cannot be applied safely
+- [x] Add regression tests for filtered aggregate changes and reset behavior
+- [x] Restrict the filtered current-employee KPI to employee profiles whose work status is currently active, excluding update-only rows
+- [x] Add regression coverage for current-employee filtering with employee-only and update-only records
+- [x] Recalculate central and branch employee summary cards from the filtered employee profiles when the selected filters support it
+- [x] Add visible source-wide / غير متأثر بالفلاتر labels to salary, center, map, and other fixed widgets
+- [x] Add regression coverage for changing versus fixed widgets under active filters
+- [x] Label the training widget and footer as source-wide / غير متأثر بالفلاتر when training data is unavailable
+- [x] Add explicit regression assertions for filtered current/central/branch counts and fixed salary/center/training/map scope
+- [x] Extract central/branch employee counting into a shared testable utility and cover filtered changes by month/status/organization/department
+- [x] Add a public-page view-model scope test proving salary, centers, training, and map are fixed and visibly labeled غير متأثر بالفلاتر
+- [x] Add fixture assertions for countFilteredDirectorates across month, status, organization, and department scopes
+- [x] Extract fixed-widget scope metadata and assert salary, centers, training, and map labels remain source-wide under active filters
