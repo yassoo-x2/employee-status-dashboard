@@ -28,8 +28,8 @@ import { DashboardLayoutSkeleton } from './DashboardLayoutSkeleton';
 import { Button } from "./ui/button";
 
 const menuItems = [
-  { icon: LayoutDashboard, label: "Page 1", path: "/" },
-  { icon: Users, label: "Page 2", path: "/some-path" },
+  { icon: LayoutDashboard, label: "نظرة عامة", path: "/" },
+  { icon: Users, label: "سجل الموظفين", path: "/" },
 ];
 
 const SIDEBAR_WIDTH_KEY = "sidebar-width";
@@ -58,14 +58,14 @@ export default function DashboardLayout({
 
   if (!user) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div dir="rtl" className="flex min-h-screen items-center justify-center bg-[#f5f7f7]">
         <div className="flex flex-col items-center gap-8 p-8 max-w-md w-full">
           <div className="flex flex-col items-center gap-6">
             <h1 className="text-2xl font-semibold tracking-tight text-center">
-              Sign in to continue
+              تسجيل الدخول للمتابعة
             </h1>
             <p className="text-sm text-muted-foreground text-center max-w-sm">
-              Access to this dashboard requires authentication. Continue to launch the login flow.
+              الوصول إلى لوحة الموظفين يتطلب تسجيل الدخول للمتابعة.
             </p>
           </div>
           <Button
@@ -73,7 +73,7 @@ export default function DashboardLayout({
             size="lg"
             className="w-full shadow-lg hover:shadow-xl transition-all"
           >
-            Sign in
+              تسجيل الدخول
           </Button>
         </div>
       </div>
@@ -81,7 +81,7 @@ export default function DashboardLayout({
   }
 
   return (
-    <SidebarProvider
+    <div dir="rtl" className="min-h-screen bg-[#f5f7f7]"><SidebarProvider
       style={
         {
           "--sidebar-width": `${sidebarWidth}px`,
@@ -91,7 +91,7 @@ export default function DashboardLayout({
       <DashboardLayoutContent setSidebarWidth={setSidebarWidth}>
         {children}
       </DashboardLayoutContent>
-    </SidebarProvider>
+    </SidebarProvider></div>
   );
 }
 
@@ -169,7 +169,7 @@ function DashboardLayoutContent({
               {!isCollapsed ? (
                 <div className="flex items-center gap-2 min-w-0">
                   <span className="font-semibold tracking-tight truncate">
-                    Navigation
+                    لوحة الموظفين
                   </span>
                 </div>
               ) : null}
@@ -224,7 +224,7 @@ function DashboardLayoutContent({
                   className="cursor-pointer text-destructive focus:text-destructive"
                 >
                   <LogOut className="mr-2 h-4 w-4" />
-                  <span>Sign out</span>
+                  <span>تسجيل الخروج</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
