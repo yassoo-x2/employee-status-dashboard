@@ -22,15 +22,16 @@ import {
 import { startLogin } from "@/const";
 import { useIsMobile } from "@/hooks/useMobile";
 import { LayoutDashboard, LogOut, PanelLeft, Users } from "lucide-react";
+import { dashboardMenuItems } from "@shared/dashboard-navigation";
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { useLocation } from "wouter";
 import { DashboardLayoutSkeleton } from './DashboardLayoutSkeleton';
 import { Button } from "./ui/button";
 
-const menuItems = [
-  { icon: LayoutDashboard, label: "نظرة عامة", path: "/" },
-  { icon: Users, label: "سجل الموظفين", path: "/" },
-];
+const menuItems = dashboardMenuItems.map((item) => ({
+  ...item,
+  icon: item.id === "overview" ? LayoutDashboard : Users,
+}));
 
 const SIDEBAR_WIDTH_KEY = "sidebar-width";
 const DEFAULT_WIDTH = 280;

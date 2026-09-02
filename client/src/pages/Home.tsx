@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { trpc } from "@/lib/trpc";
 import { calculateKpis, filterDashboardRecords } from "@shared/dashboard-utils";
 import DashboardLayout from "@/components/DashboardLayout";
@@ -36,6 +36,12 @@ export default function Home() {
   const [organization, setOrganization] = useState("all");
   const [department, setDepartment] = useState("all");
   const [selected, setSelected] = useState<any>(null);
+  const [chartsReady, setChartsReady] = useState(false);
+
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => setChartsReady(true));
+    return () => cancelAnimationFrame(frame);
+  }, []);
 
   const filtered = useMemo(() => {
     if (!data) return [];
@@ -60,9 +66,9 @@ export default function Home() {
     <Tabs value={view} onValueChange={setView} className="space-y-6"><TabsList className="h-11 rounded-xl bg-slate-200/70 p-1"><TabsTrigger value="overview" className="rounded-lg px-5">نظرة عامة</TabsTrigger><TabsTrigger value="quality" className="rounded-lg px-5">جودة البيانات <span className="mr-2 rounded-full bg-amber-100 px-2 py-0.5 text-xs text-amber-800">{nf.format(q.updatesMissingEmployee + q.employeesMissingUpdate)}</span></TabsTrigger></TabsList>
       <TabsContent value="overview" className="mt-0 space-y-6">
         <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"><MetricCard title="إجمالي الموظفين" value={kpis.totalEmployees} hint={`${nf.format(q.employeeCodes)} كوداً فريداً`} icon={Users} tone="bg-teal-600" /><MetricCard title="سجلات التحديث" value={kpis.totalUpdates} hint={`${nf.format(q.updateCodes)} كوداً في التحديث`} icon={CalendarDays} tone="bg-blue-600" /><MetricCard title="الحالات النشطة" value={activeCount} hint="وفق آخر ملف تحديث" icon={Activity} tone="bg-amber-500" /><MetricCard title="استثناءات المطابقة" value={kpis.exceptions} hint={`${nf.format(q.duplicateUpdateCodes)} مجموعات مكررة`} icon={ShieldAlert} tone="bg-rose-600" /></section>
-        <section className="grid gap-5 xl:grid-cols-[1.15fr_0.85fr]"><Card className="border-0 shadow-sm"><CardHeader className="pb-1"><CardTitle className="text-base">حجم التحديثات حسب الشهر</CardTitle><p className="text-xs text-slate-400">عدد السجلات الواردة في كل شهر</p></CardHeader><CardContent className="h-72"><ResponsiveContainer width="100%" height="100%"><BarChart data={updateChart} margin={{ top: 12, right: 8, left: -18, bottom: 0 }}><CartesianGrid vertical={false} stroke="#e2e8f0" /><XAxis dataKey="name" tick={{ fontSize: 11 }} axisLine={false} tickLine={false} /><YAxis tick={{ fontSize: 11 }} axisLine={false} tickLine={false} /><Tooltip cursor={{ fill: "#f1f5f9" }} formatter={(v: number) => [nf.format(v), "السجلات"]} /><Bar dataKey="value" radius={[6, 6, 0, 0]} fill="#0f766e" /></BarChart></ResponsiveContainer></CardContent></Card>
-          <Card className="border-0 shadow-sm"><CardHeader className="pb-1"><CardTitle className="text-base">توزيع حالات التحديث</CardTitle><p className="text-xs text-slate-400">الحالة المسجلة في آخر ملف</p></CardHeader><CardContent className="h-72"><ResponsiveContainer width="100%" height="100%"><PieChart><Pie data={data.facets.statuses.slice(0, 7)} dataKey="value" nameKey="label" innerRadius={56} outerRadius={88} paddingAngle={3}>{data.facets.statuses.slice(0, 7).map((_: any, i: number) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}</Pie><Tooltip formatter={(v: number, _: string, p: any) => [nf.format(v), label(p?.payload?.label)]} /></PieChart></ResponsiveContainer></CardContent></Card></section>
-        <section className="grid gap-5 xl:grid-cols-2"><Distribution title="أعلى الجهات" data={data.facets.organizations.slice(0, 8)} /><Distribution title="توزيع مواقع العمل" data={data.facets.locations.slice(0, 8)} /></section>
+        {chartsReady ? <section className="grid gap-5 xl:grid-cols-[1.15fr_0.85fr]"><Card className="border-0 shadow-sm"><CardHeader className="pb-1"><CardTitle className="text-base">حجم التحديثات حسب الشهر</CardTitle><p className="text-xs text-slate-400">عدد السجلات الواردة في كل شهر</p></CardHeader><CardContent className="h-72"><SafeChart><BarChart data={updateChart} margin={{ top: 12, right: 8, left: -18, bottom: 0 }}><CartesianGrid vertical={false} stroke="#e2e8f0" /><XAxis dataKey="name" tick={{ fontSize: 11 }} axisLine={false} tickLine={false} /><YAxis tick={{ fontSize: 11 }} axisLine={false} tickLine={false} /><Tooltip cursor={{ fill: "#f1f5f9" }} formatter={(v: number) => [nf.format(v), "السجلات"]} /><Bar dataKey="value" radius={[6, 6, 0, 0]} fill="#0f766e" /></BarChart></SafeChart></CardContent></Card>
+          <Card className="border-0 shadow-sm"><CardHeader className="pb-1"><CardTitle className="text-base">توزيع حالات التحديث</CardTitle><p className="text-xs text-slate-400">الحالة المسجلة في آخر ملف</p></CardHeader><CardContent className="h-72"><SafeChart><PieChart><Pie data={data.facets.statuses.slice(0, 7)} dataKey="value" nameKey="label" innerRadius={56} outerRadius={88} paddingAngle={3}>{data.facets.statuses.slice(0, 7).map((_: any, i: number) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}</Pie><Tooltip formatter={(v: number, _: string, p: any) => [nf.format(v), label(p?.payload?.label)]} /></PieChart></SafeChart></CardContent></Card>
+        <section className="grid gap-5 xl:grid-cols-2"><Distribution title="أعلى الجهات" data={data.facets.organizations.slice(0, 8)} /><Distribution title="توزيع مواقع العمل" data={data.facets.locations.slice(0, 8)} /></section></section> : <section className="grid gap-5 xl:grid-cols-[1.15fr_0.85fr]"><div className="h-72 rounded-2xl bg-white/70" /><div className="h-72 rounded-2xl bg-white/70" /></section>}
       </TabsContent>
       <TabsContent value="quality" className="mt-0 space-y-6"><section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"><MetricCard title="أكواد متطابقة" value={q.matchedCodes} hint="موجودة في المصدرين" icon={Users} tone="bg-teal-600" /><MetricCard title="تحديثات بلا موظف" value={q.updatesMissingEmployee} hint="تحتاج مراجعة الربط" icon={ShieldAlert} tone="bg-rose-600" /><MetricCard title="موظفون بلا تحديث" value={q.employeesMissingUpdate} hint="لم يظهروا في الملف الشهري" icon={CalendarDays} tone="bg-amber-500" /><MetricCard title="تكرار أكواد التحديث" value={q.duplicateUpdateCodes} hint="مجموعات تحتوي على تكرار" icon={Activity} tone="bg-blue-600" /></section><div className="grid gap-5 xl:grid-cols-2"><ExceptionCard title="تحديثات بلا موظف مطابق" items={data.exceptions.updatesMissingEmployee} /><ExceptionCard title="موظفون بلا تحديث شهري" items={data.exceptions.employeesMissingUpdate} /><ExceptionCard title="أكواد تحديث مكررة" items={data.exceptions.duplicateUpdateCodes} /><ExceptionCard title="أكواد موظفين مكررة" items={data.exceptions.duplicateEmployeeCodes} /></div></TabsContent>
     </Tabs>
@@ -72,7 +78,24 @@ export default function Home() {
   </div></DashboardLayout>;
 }
 
+function SafeChart({ children }: { children: React.ReactElement }) {
+  const hostRef = useRef<HTMLDivElement>(null);
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    const host = hostRef.current;
+    if (!host) return;
+    const update = () => setReady(host.clientWidth > 0 && host.clientHeight > 0);
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(host);
+    return () => observer.disconnect();
+  }, []);
+
+  return <div ref={hostRef} className="h-full min-w-0">{ready ? <ResponsiveContainer width="100%" height="100%">{children}</ResponsiveContainer> : null}</div>;
+}
+
 function SelectFilter({ value, setValue, placeholder, options }: { value: string; setValue: (v: string) => void; placeholder: string; options: { label: string; value: number }[] }) { return <select value={value} onChange={(e) => setValue(e.target.value)} className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-right text-sm text-slate-600 outline-none focus:border-teal-500"> <option value="all">{placeholder}</option>{options.map((option) => <option key={option.label} value={option.label}>{option.label}</option>)}</select>; }
-function Distribution({ title, data }: { title: string; data: { label: string; value: number }[] }) { return <Card className="border-0 shadow-sm"><CardHeader><CardTitle className="text-base">{title}</CardTitle></CardHeader><CardContent className="h-72"><ResponsiveContainer width="100%" height="100%"><BarChart data={data} layout="vertical" margin={{ top: 0, right: 10, left: 8, bottom: 0 }}><CartesianGrid horizontal={false} stroke="#e2e8f0" /><XAxis type="number" tick={{ fontSize: 10 }} axisLine={false} tickLine={false} /><YAxis type="category" dataKey="label" width={150} tick={{ fontSize: 10 }} axisLine={false} tickLine={false} /><Tooltip formatter={(v: number) => [nf.format(v), "السجلات"]} /><Bar dataKey="value" fill="#0f766e" radius={[0, 5, 5, 0]} /></BarChart></ResponsiveContainer></CardContent></Card>; }
+function Distribution({ title, data }: { title: string; data: { label: string; value: number }[] }) { return <Card className="border-0 shadow-sm"><CardHeader><CardTitle className="text-base">{title}</CardTitle></CardHeader><CardContent className="h-72"><SafeChart><BarChart data={data} layout="vertical" margin={{ top: 0, right: 10, left: 8, bottom: 0 }}><CartesianGrid horizontal={false} stroke="#e2e8f0" /><XAxis type="number" tick={{ fontSize: 10 }} axisLine={false} tickLine={false} /><YAxis type="category" dataKey="label" width={150} tick={{ fontSize: 10 }} axisLine={false} tickLine={false} /><Tooltip formatter={(v: number) => [nf.format(v), "السجلات"]} /><Bar dataKey="value" fill="#0f766e" radius={[0, 5, 5, 0]} /></BarChart></SafeChart></CardContent></Card>; }
 function ExceptionCard({ title, items }: { title: string; items: string[] }) { return <Card className="border-0 shadow-sm"><CardHeader><CardTitle className="text-base">{title}</CardTitle></CardHeader><CardContent><div className="max-h-72 space-y-2 overflow-y-auto">{items.slice(0, 100).map((item) => <div key={item} className="rounded-lg bg-slate-50 px-3 py-2 font-mono text-xs text-slate-600">{item || "بدون كود"}</div>)}{items.length > 100 && <p className="text-center text-xs text-slate-400">و {nf.format(items.length - 100)} سجلاً إضافياً</p>}</div></CardContent></Card>; }
 function Detail({ label, value }: { label: string; value: string }) { return <div><p className="text-xs text-slate-400">{label}</p><p className="mt-1 font-medium text-slate-700">{value}</p></div>; }

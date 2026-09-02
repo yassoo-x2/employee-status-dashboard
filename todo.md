@@ -31,3 +31,8 @@
 - [x] Add duplicate-code exception panels for employee and monthly-update sources
 - [x] Make drill-down actions keyboard accessible and strengthen premium RTL visual hierarchy
 - [x] Add Vitest coverage for normalization, filter combinations, and KPI calculations
+
+- [x] Fix duplicate sidebar route key caused by two menu items sharing the `/` path
+- [x] Add regression coverage for unique sidebar menu item paths
+- [x] Re-run tests, TypeScript/build checks, and browser console verification
+- [x] Prevent zero-size Recharts warnings during responsive rendering
