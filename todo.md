@@ -101,3 +101,9 @@
 - [x] Test the real monthly-administration aggregation with start/end, open-ended, Excel-serial, and dd/mm/yyyy fixture dates and assert per-administration monthly values
 - [x] Add a production-path test that executes the Python generator and validates the generated dashboard payload
 - [x] Rebuild dashboard.json through the final tested aggregation path and rerun the complete verification
+
+- [x] Reclassify monthly transfer chart from «نوع النقل» and «الحالة» columns
+- [x] Map خارجي + نقل من to نقل إلى الجمارك
+- [x] Map خارجي + نقل إلى to نقل خارج الجمارك
+- [x] Aggregate all داخلي rows into النقل الداخلي regardless of الحالة
+- [x] Add regression tests for the three transfer classification rules and update the chart labels

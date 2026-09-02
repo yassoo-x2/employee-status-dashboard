@@ -16,6 +16,27 @@ describe("public overview metrics", () => {
     expect(dashboardData.publicMetrics.separationsByMonth.map((row) => row.month)).toEqual(months);
     expect(dashboardData.publicMetrics.transfersInByMonth.map((row) => row.month)).toEqual(months);
     expect(dashboardData.publicMetrics.transfersOutByMonth.map((row) => row.month)).toEqual(months);
+    expect(dashboardData.publicMetrics.transfersInternalByMonth.map((row) => row.month)).toEqual(months);
+  });
+
+  it("reconciles transfer categories from the actual update rows", () => {
+    const summary = dashboardData.publicMetrics.transferSummaryByMonth;
+    const expected = dashboardData.updates.reduce((acc: Record<string, Record<string, number>>, row: any) => {
+      const month = String(row.month).slice(0, 7);
+      const type = String(row.movementType ?? "").trim();
+      const status = String(row.status ?? "").trim();
+      const category = type === "داخلي" ? "نقل داخلي" : type === "خارجي" && status === "نقل من" ? "نقل إلى الجمارك" : type === "خارجي" && status === "نقل إلى" ? "نقل خارج الجمارك" : null;
+      if (category) {
+        acc[month] ??= {};
+        acc[month][category] = (acc[month][category] ?? 0) + 1;
+      }
+      return acc;
+    }, {});
+    for (const row of summary) {
+      expect(row["نقل إلى الجمارك"]).toBe(expected[row.month]?.["نقل إلى الجمارك"] ?? 0);
+      expect(row["نقل خارج الجمارك"]).toBe(expected[row.month]?.["نقل خارج الجمارك"] ?? 0);
+      expect(row["نقل داخلي"]).toBe(expected[row.month]?.["نقل داخلي"] ?? 0);
+    }
   });
 
   it("normalizes map locations to valid coordinates and employee counts", () => {
