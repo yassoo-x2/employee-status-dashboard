@@ -59,7 +59,7 @@ export default function DashboardLayout({
 
   if (!user) {
     return (
-      <div dir="rtl" className="flex min-h-screen items-center justify-center bg-[#f5f7f7]">
+      <div dir="rtl" className="flex min-h-screen items-center justify-center bg-[#f5f1e8]">
         <div className="flex flex-col items-center gap-8 p-8 max-w-md w-full">
           <div className="flex flex-col items-center gap-6">
             <h1 className="text-2xl font-semibold tracking-tight text-center">
@@ -82,7 +82,7 @@ export default function DashboardLayout({
   }
 
   return (
-    <div dir="rtl" className="min-h-screen bg-[#f5f7f7]"><SidebarProvider
+    <div dir="rtl" className="min-h-screen bg-[#f5f1e8]"><SidebarProvider defaultOpen={false}
       style={
         {
           "--sidebar-width": `${sidebarWidth}px`,

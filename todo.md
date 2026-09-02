@@ -36,3 +36,19 @@
 - [x] Add regression coverage for unique sidebar menu item paths
 - [x] Re-run tests, TypeScript/build checks, and browser console verification
 - [x] Prevent zero-size Recharts warnings during responsive rendering
+
+- [x] Change all dashboard number formatting to Western Arabic numerals 0-9 instead of Arabic-Indic digits
+- [x] Remove employee-name table, row drill-down, and individual employee detail dialog from the statistical dashboard
+- [x] Keep aggregate charts, KPI cards, filters, and data-quality statistics without exposing name-level records
+- [x] Rework the dashboard into a compact landscape-oriented viewport with minimal vertical scrolling
+- [x] Test responsive landscape and desktop views, then save a new checkpoint
+
+- [ ] Verify official colors, emblem, typography, and usage guidance for the new Syrian visual identity
+- [x] Apply an identity-inspired Syrian color system to the statistical dashboard without reducing chart readability
+- [x] Re-run visual and technical checks after the identity refresh
+
+- [x] Restore month, status, organization, and department filters for aggregate statistics only
+- [x] Validate the compact layout at desktop and narrower landscape/tablet viewports without clipping key sections
+- [ ] Obtain or receive an official Syrian identity brand guide before claiming exact official compliance
+- [x] Re-check palette contrast and chart readability after the final aggregate-filter redesign
+- [x] Fix conditional hook order in Home so aggregate filters do not trigger a rendered-more-hooks error during loading

@@ -43,10 +43,10 @@
 }
 
 :root {
-  --primary: oklch(0.48 0.12 175);
-  --primary-foreground: oklch(0.98 0.01 175);
-  --sidebar-primary: oklch(0.48 0.12 175);
-  --sidebar-primary-foreground: oklch(0.98 0.01 175);
+  --primary: oklch(0.36 0.10 165);
+  --primary-foreground: oklch(0.98 0.01 90);
+  --sidebar-primary: oklch(0.36 0.10 165);
+  --sidebar-primary-foreground: oklch(0.98 0.01 90);
   --chart-1: var(--color-blue-300);
   --chart-2: var(--color-blue-500);
   --chart-3: var(--color-blue-600);
@@ -69,7 +69,7 @@
   --destructive-foreground: oklch(0.985 0 0);
   --border: oklch(0.92 0.004 286.32);
   --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.623 0.214 259.815);
+  --ring: oklch(0.58 0.12 82);
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.235 0.015 65);
   --sidebar-accent: oklch(0.967 0.001 286.375);
@@ -122,7 +122,7 @@
     font-family: "IBM Plex Sans Arabic", system-ui, sans-serif;
     font-feature-settings: "calt" 1, "tnum" 1;
   }
-  ::selection { background: oklch(0.88 0.08 175); color: oklch(0.24 0.04 175); }
+  ::selection { background: oklch(0.86 0.09 82); color: oklch(0.24 0.04 165); }
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
   [type="button"]:not(:disabled),
