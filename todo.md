@@ -43,12 +43,12 @@
 - [x] Rework the dashboard into a compact landscape-oriented viewport with minimal vertical scrolling
 - [x] Test responsive landscape and desktop views, then save a new checkpoint
 
-- [ ] Verify official colors, emblem, typography, and usage guidance for the new Syrian visual identity
+- [x] Document that exact official colors, emblem, typography, and usage guidance could not be verified without an accessible official brand guide
 - [x] Apply an identity-inspired Syrian color system to the statistical dashboard without reducing chart readability
 - [x] Re-run visual and technical checks after the identity refresh
 
 - [x] Restore month, status, organization, and department filters for aggregate statistics only
 - [x] Validate the compact layout at desktop and narrower landscape/tablet viewports without clipping key sections
-- [ ] Obtain or receive an official Syrian identity brand guide before claiming exact official compliance
+- [x] Record official brand-guide limitation and avoid claiming exact official compliance until a guide is supplied
 - [x] Re-check palette contrast and chart readability after the final aggregate-filter redesign
 - [x] Fix conditional hook order in Home so aggregate filters do not trigger a rendered-more-hooks error during loading
