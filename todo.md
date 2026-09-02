@@ -70,3 +70,22 @@
 - [x] Replace the failing Google Maps success path with a deterministic coordinate-based work-location map
 - [x] Remove map-load console errors and verify the deterministic map in the browser
 - [x] Run a fresh browser-console verification after the coordinate-map replacement and document the clean result
+
+- [x] Add current new-employee count for codes beginning with GBC-
+- [x] Add legacy-employee count for codes beginning with O-
+- [x] Add special-needs employee count from the health/status fields when explicitly identified
+- [x] Add gender distribution
+- [x] Add employee-type distribution: مقيم، اداري، اداري مقيم
+- [x] Add customs-police work-pattern distribution limited to directorates containing الضابطة الجمركية, split into اداري and قوة تنفيذية
+- [x] Add current-employee age groups: تحت 30 عام and فوق 30 عام
+- [x] Add absence-rate metric from the monthly update records
+- [x] Add current-employee service-length groups using the requested six bands
+- [x] Add job-title distribution for roles such as موظف ورئيس قسم
+- [x] Add monthly employee counts by administration
+- [x] Add a second RTL HR analytics page with aggregate charts only and no employee-name table
+- [x] Add Vitest coverage for HR classifications, absence rate, service bands, and monthly administration counts
+- [x] Verify the new page visually and save a checkpoint
+- [x] Fix conditional hook order in HRAnalytics so memoized administration series are initialized before loading/error returns
+- [x] Add dedicated HR metrics Vitest assertions for code prefixes, special needs, gender/type, police patterns, age/service bands, absence rate, and monthly administration counts
+- [x] Save a new checkpoint after HR page verification
+- [ ] Save the final checkpoint containing the HR analytics page changes

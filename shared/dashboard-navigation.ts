@@ -1,6 +1,6 @@
 export const dashboardMenuItems = [
   { id: "overview", label: "نظرة عامة", path: "/" },
-  { id: "employees", label: "سجل الموظفين", path: "/employees" },
+  { id: "hr", label: "الموارد البشرية", path: "/hr" },
 ] as const;
 
 export function hasUniqueDashboardPaths(items = dashboardMenuItems) {
