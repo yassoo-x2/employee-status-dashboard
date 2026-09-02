@@ -123,3 +123,20 @@
 - [x] Add a public-page view-model scope test proving salary, centers, training, and map are fixed and visibly labeled غير متأثر بالفلاتر
 - [x] Add fixture assertions for countFilteredDirectorates across month, status, organization, and department scopes
 - [x] Extract fixed-widget scope metadata and assert salary, centers, training, and map labels remain source-wide under active filters
+
+## Requested public-filter behavior revision
+
+- [x] Remove the public overview status filter and its filtering logic
+- [x] Make the department filter options and results depend on the selected directorate hierarchy from DB sheet هيكلية
+- [x] Keep current-employee count independent of the selected month while preserving other supported filters
+- [x] Make total salaries respond to the selected month
+- [x] Keep monthly movement trend independent of the selected month while preserving non-month filters where supported
+- [x] Remove the duplicated monthly contracts/separations chart
+- [x] Keep the transfer chart independent of the selected month while preserving non-month filters where supported
+- [x] Add Vitest coverage for the revised month-scope rules and hierarchy-dependent department filter
+- [x] Verify RTL desktop and landscape layouts, TypeScript, tests, and production build after the revision
+
+## Final scope-alignment follow-up
+
+- [x] Remove salary from the source-wide fixed-widget metadata because it now responds to the month filter
+- [x] Update regression assertions so salary is month-sensitive while centers, training, and map remain source-wide

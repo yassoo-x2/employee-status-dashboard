@@ -10,6 +10,13 @@ describe("public overview metrics", () => {
     expect(dashboardData.publicMetrics.centralDirectoratesEmployees + dashboardData.publicMetrics.branchDirectoratesEmployees).toBeGreaterThan(0);
   });
 
+  it("contains hierarchy-driven directorate/departments and monthly salary values", () => {
+    expect(dashboardData.facets.hierarchySource).toBe("DB.هيكلية");
+    expect(Object.keys(dashboardData.facets.departmentsByDirectorate).length).toBeGreaterThan(0);
+    expect(dashboardData.facets.departmentsByDirectorate["مديرية المالية"]).toContain("قسم الحسابات");
+    expect(dashboardData.publicMetrics.salaryByMonth).toEqual(expect.arrayContaining([{ month: "2026-06", value: 851946 }]));
+  });
+
   it("contains monthly contract, separation, and transfer series with matching months", () => {
     const months = dashboardData.publicMetrics.newContractsByMonth.map((row) => row.month);
     expect(months.length).toBeGreaterThan(0);
