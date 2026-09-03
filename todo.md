@@ -154,3 +154,11 @@
 
 - [x] Re-run the public overview visual verification at 1024×768 after the directorate chart revision
 - [x] Confirm directorate labels, internal scrolling, and RTL layout remain unclipped at landscape/tablet width
+
+## Visual system refinement
+
+- [x] Apply the requested palette in order: #ffffff, #054239, #b9a779, #4a151e, #428177, #edebe0, #6b1f2a, #3d3a3b
+- [x] Improve global dashboard hierarchy, surfaces, borders, and chart colors using the requested palette
+- [x] Replace mismatched current KPI and section icons with semantically appropriate iconography
+- [x] Refresh badges and filter controls for a more professional RTL presentation
+- [x] Verify contrast, RTL desktop/landscape responsiveness, tests, and production build

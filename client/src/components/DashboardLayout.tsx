@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/sidebar";
 import { startLogin } from "@/const";
 import { useIsMobile } from "@/hooks/useMobile";
-import { LayoutDashboard, LogOut, PanelLeft, Users } from "lucide-react";
+import { ChartNoAxesCombined, LogOut, PanelLeft, UsersRound } from "lucide-react";
 import { dashboardMenuItems } from "@shared/dashboard-navigation";
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { useLocation } from "wouter";
@@ -30,7 +30,7 @@ import { Button } from "./ui/button";
 
 const menuItems = dashboardMenuItems.map((item) => ({
   ...item,
-  icon: item.id === "overview" ? LayoutDashboard : Users,
+  icon: item.id === "overview" ? ChartNoAxesCombined : UsersRound,
 }));
 
 const SIDEBAR_WIDTH_KEY = "sidebar-width";
@@ -59,7 +59,7 @@ export default function DashboardLayout({
 
   if (!user) {
     return (
-      <div dir="rtl" className="flex min-h-screen items-center justify-center bg-[#f5f1e8]">
+      <div dir="rtl" className="flex min-h-screen items-center justify-center bg-[#edebe0]">
         <div className="flex flex-col items-center gap-8 p-8 max-w-md w-full">
           <div className="flex flex-col items-center gap-6">
             <h1 className="text-2xl font-semibold tracking-tight text-center">
@@ -82,7 +82,7 @@ export default function DashboardLayout({
   }
 
   return (
-    <div dir="rtl" className="min-h-screen bg-[#f5f1e8]"><SidebarProvider defaultOpen={false}
+    <div dir="rtl" className="min-h-screen bg-[#edebe0]"><SidebarProvider defaultOpen={false}
       style={
         {
           "--sidebar-width": `${sidebarWidth}px`,
@@ -158,7 +158,7 @@ function DashboardLayoutContent({
           className="border-r-0"
           disableTransition={isResizing}
         >
-          <SidebarHeader className="h-16 justify-center">
+          <SidebarHeader className="h-16 justify-center border-b border-[#b9a779]/40">
             <div className="flex items-center gap-3 px-2 transition-all w-full">
               <button
                 onClick={toggleSidebar}
@@ -169,7 +169,7 @@ function DashboardLayoutContent({
               </button>
               {!isCollapsed ? (
                 <div className="flex items-center gap-2 min-w-0">
-                  <span className="font-semibold tracking-tight truncate">
+                  <span className="font-semibold tracking-tight truncate text-sidebar-foreground">
                     لوحة الموظفين
                   </span>
                 </div>
@@ -187,10 +187,10 @@ function DashboardLayoutContent({
                       isActive={isActive}
                       onClick={() => setLocation(item.path)}
                       tooltip={item.label}
-                      className={`h-10 transition-all font-normal`}
+                      className={`h-10 rounded-xl transition-all font-normal`}
                     >
                       <item.icon
-                        className={`h-4 w-4 ${isActive ? "text-primary" : ""}`}
+                        className={`h-4 w-4 ${isActive ? "text-sidebar-primary" : "text-sidebar-foreground/75"}`}
                       />
                       <span>{item.label}</span>
                     </SidebarMenuButton>
