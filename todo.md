@@ -162,3 +162,11 @@
 - [x] Replace mismatched current KPI and section icons with semantically appropriate iconography
 - [x] Refresh badges and filter controls for a more professional RTL presentation
 - [x] Verify contrast, RTL desktop/landscape responsiveness, tests, and production build
+
+## Syrian institutional dashboard redesign
+
+- [x] Establish a more coherent Syrian institutional visual direction for the existing Arabic RTL dashboard without changing data behavior
+- [x] Rework the global layout, spacing, surfaces, typography, and navigation hierarchy for a more professional dashboard experience
+- [x] Refine KPI cards, badges, filters, charts, and sidebar icons using semantic visual language
+- [x] Preserve the existing aggregate-only privacy model, filters, directorate charts, and HR analytics behavior
+- [x] Validate desktop and landscape tablet screenshots, tests, TypeScript, and production build
